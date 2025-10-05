@@ -1,0 +1,13 @@
+---
+- name: Schedule nightly reboot on all Mint machines
+  hosts: all
+  become: yes
+
+  tasks:
+    - name: Ensure daily midnight reboot cron job exists
+      ansible.builtin.cron:
+        name: "Nightly system reboot"
+        user: root
+        minute: "0"
+        hour: "0"
+        job: "/sbin/shutdown -r now"
